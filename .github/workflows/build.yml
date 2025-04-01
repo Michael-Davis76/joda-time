@@ -50,3 +50,19 @@ jobs:
 
     - name: Perform CodeQL Analysis
       uses: github/codeql-action/analyze@70df9def86d22bf0ea4e7f8b956e7b92e7c1ea22  #codeql-bundle-v2.20.7
+
+  build-chain:
+    needs: build
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        java-version: [17]
+    steps:
+    - name: Build Chain ${{ matrix.java-version }}
+      id: build-chain
+      uses: ginxo/github-action-build-chain@BXMSPROD-1025
+      with:
+        definition-file: https://raw.githubusercontent.com/Michael-Davis76/spring-petclinic/master/.github/workflows/maven-build.yaml
+      env:
+        GITHUB_TOKEN: "${{ secrets.GITHUB_TOKEN }}"
+
