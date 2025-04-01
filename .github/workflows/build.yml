@@ -60,7 +60,7 @@ jobs:
     steps:
     - name: Build Chain ${{ matrix.java-version }}
       id: build-chain
-      uses: ginxo/github-action-build-chain@BXMSPROD-1025
+      uses: kiegroup/github-action-build-chain@v3.5.9
       with:
         definition-file: https://raw.githubusercontent.com/Michael-Davis76/spring-petclinic/master/.github/workflows/maven-build.yaml
       env:
