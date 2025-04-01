@@ -1,0 +1,45 @@
+name: Java CI with Maven
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v3
+      
+      - name: Set up Nexus Repository
+        uses: actions/setup-java@v4
+        with:
+          java-version: '17'
+          distribution: 'temurin'
+          server-id: maven-releases
+          server-username: MAVEN_USERNAME
+          server-password: MAVEN_PASSWORD
+
+      - name: TESTING
+        run: cat ~/.m2/settings.xml
+
+      - name: Publish package!!
+        run: mvn clean deploy
+        env:
+          MAVEN_USERNAME: ${{ secrets.USERNAME }}
+          MAVEN_PASSWORD: ${{ secrets.PASSWORD }}
+
+  build-chain:
+    needs: build
+    runs-on: ubuntu-latest
+    steps:
+    - name: Build Chain
+      id: build-chain
+      uses: kiegroup/github-action-build-chain@v3.5.9
+      with:
+        definition-file: https://raw.githubusercontent.com/Michael-Davis76/spring-petclinic/refs/heads/master/.github/workflows/maven-build.yml
+      env:
+        GITHUB_TOKEN: "${{ secrets.GITHUB_TOKEN }}"
