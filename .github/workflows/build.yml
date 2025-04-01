@@ -62,7 +62,7 @@ jobs:
       id: build-chain
       uses: kiegroup/github-action-build-chain@v3.5.9
       with:
-        definition-file: https://raw.githubusercontent.com/Michael-Davis76/spring-petclinic/master/.github/workflows/maven-build.yaml
+        definition-file: https://raw.githubusercontent.com/Michael-Davis76/spring-petclinic/refs/heads/master/.github/workflows/maven-build.yml
       env:
         GITHUB_TOKEN: "${{ secrets.GITHUB_TOKEN }}"
 
